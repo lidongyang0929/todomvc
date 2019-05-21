@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>todoMVC</title>
+</head>
+<body>
+   <section class="todoapp">
+    <header class="header">
+     <h1>todos</h1>
+     <input class="new-todo" autofocus  placeholder="What needs to be done?" 
+       v-model="newTodo" @keyup.enter="addTodo">
+    </header>
+    <section class="main" >
+     <input type="checkbox" class="toggle-all">
+      <ul class="todo-list">
+       <li class="todo" v-for="todo in filteredTodos" :class="{completed:todo.completed,editing:todo===editedTodo}">
+         <div class="view">
+            <input class="toggle" type="checkbox" v-model=todo.completed>
+            <label @dblclick="editTodo(todo)">{{todo.title}}</label>
+            <button class="destroy" @click="removeTodo(todo)"></button>
+        </div>
+        <input class="edit" type="text" v-model="todo.title" @blur="doneEdit(todo)" @keyup.enter="doneEdit(todo)"
+          @keyup.esc="cancelEdit(todo)">
+      </li>
+    </ul>
+    </section>
+    <footer class="footer">
+        <span class="todo-count">
+            <strong>{{remaining}}</strong> items left
+        </span>
+        <ul class="filters">
+            <li><a href="#/all" :class="{selected:visibility==='all'}">All</a></li>
+            <li><a href="#/active" :class="{selected:visibility==='active'}">Active</a></li>
+            <li><a href="#/completed" :class="{selected:visibility==='completed'}">Completed</a></li>
+        </ul>
+        <button class="clear-completed" @click="clear"> 
+            Clear completed
+        </button>
+    </footer>
+</section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+    <script src="./main.js"></script>
+</body>
+</html>
